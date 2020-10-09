@@ -1,19 +1,20 @@
 #include <iostream>
 
-long long fib(int n)
+int foo(int n)
 {
-	if (n == 1 || n == 0)
+	int x = 1, k;
+	if (n == 1)
 	{
-		return n;
+		return x;
 	}
-	else
+	for (k = 1; k < n; ++k)
 	{
-		return (fib(n - 1) + fib(n - 2));
+		x = x + foo(k) * foo(n - k);
 	}
+	return x;
 }
 
 int main()
 {
-	std::cout << fib(20) << '\n';
-	return 0;
+	std::cout << foo(5);
 }
