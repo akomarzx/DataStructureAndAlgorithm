@@ -1,20 +1,18 @@
 #include <iostream>
 
-int foo(int n)
+void foo(int x[], int size)
 {
-	int x = 1, k;
-	if (n == 1)
+	for (int y{ 0 }; y < size; ++y)
 	{
-		return x;
+		x[y] = y;
 	}
-	for (k = 1; k < n; ++k)
-	{
-		x = x + foo(k) * foo(n - k);
-	}
-	return x;
+	size = 20;
 }
-
 int main()
 {
-	std::cout << foo(5);
-x`}
+	constexpr int size = 5;
+	int x[size]{ 2,3,54,6,3 };
+	std::cout << *(x + 1) << std::endl;
+
+	return 0;
+}
