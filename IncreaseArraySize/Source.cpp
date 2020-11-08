@@ -31,4 +31,5 @@ int main()
 	delete[] array1;
 	delete[] array2;
 	return 0;
+	std::cout << "Hello World\n";
 }
