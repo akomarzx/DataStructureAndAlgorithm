@@ -1,6 +1,12 @@
 #include<iostream>
 #include<vector>
 #include<thread>
+void Swap(int* Value_A, int* Value_B)
+{
+	int Temp = *Value_A;
+	*Value_A = *Value_B;
+	*Value_B = Temp;
+}
 class IntArray
 {
 private:
@@ -89,6 +95,25 @@ public:
 			throw 1;
 		}
 	}
+	int Search(int Key)
+	{
+		if (Length <= 0)
+		{
+			throw 1;
+		}
+		else
+		{
+			for (int x{ 0 }; x < Length; ++x)
+			{
+				if (Key == MemoryLocation[x])
+				{
+					Swap((MemoryLocation + x), MemoryLocation);
+					return MemoryLocation[0];
+				}
+			}
+			return -1;
+		}
+	}
 };
 
 
@@ -99,6 +124,7 @@ int main()
 	myArray.Print();
 	myArray.Delete(0);
 	std::cout << myArray.Size() << '\n';
+	std::cout << myArray.Search(40);
 	myArray.Print();
 	return 0;
 }
