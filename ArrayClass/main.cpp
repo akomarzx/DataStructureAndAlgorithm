@@ -8,6 +8,7 @@ private:
 	size_t Capacity;
 	size_t Length;
 public:
+	IntArray(const IntArray&) = delete;
 	~IntArray()
 	{
 		delete[] MemoryLocation;
@@ -93,16 +94,11 @@ public:
 
 int main()
 {
-	IntArray myArray;
-
-
+	IntArray myArray{ 10,20,30,40,50,60,70,80,90,100 };
 	std::cout << myArray.Size() << '\n';
 	myArray.Print();
-	myArray.Insert(1, 18);
-	myArray.Print();
+	myArray.Delete(0);
 	std::cout << myArray.Size() << '\n';
-
 	myArray.Print();
-	std::cout << myArray.Size() << '\n';
 	return 0;
 }
