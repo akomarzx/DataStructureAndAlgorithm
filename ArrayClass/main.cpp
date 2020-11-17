@@ -24,6 +24,11 @@ public:
 	{
 		MemoryLocation = new int[Capacity];
 	}
+	IntArray(int Count)//Allocates n Memory for the array  
+		:Capacity{ Count }, Length{ 0 }
+	{
+		MemoryLocation = new int[Capacity];
+	}
 	IntArray(std::initializer_list<int>Initial_Elements)
 		:Capacity{Initial_Elements.size()}, Length{Initial_Elements.size()}
 	{
@@ -119,12 +124,6 @@ public:
 
 int main()
 {
-	IntArray myArray{ 10,20,30,40,50,60,70,80,90,100 };
-	std::cout << myArray.Size() << '\n';
-	myArray.Print();
-	myArray.Delete(0);
-	std::cout << myArray.Size() << '\n';
-	std::cout << myArray.Search(40);
-	myArray.Print();
+	
 	return 0;
 }
