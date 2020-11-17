@@ -24,7 +24,7 @@ public:
 	{
 		MemoryLocation = new int[Capacity];
 	}
-	IntArray(int Count)//Allocates n Memory for the array  
+	IntArray(size_t Count)//Allocates n Memory for the array  
 		:Capacity{ Count }, Length{ 0 }
 	{
 		MemoryLocation = new int[Capacity];
@@ -100,11 +100,11 @@ public:
 			throw 1;
 		}
 	}
-	int Search(int Key)
+	int Search(int Key)//Linear Search Version returns the index if search is successful -1 if search is unsuccessful
 	{
 		if (Length <= 0)
 		{
-			throw 1;
+			return -1;
 		}
 		else
 		{
@@ -119,11 +119,20 @@ public:
 			return -1;
 		}
 	}
+	int Search(int Key)//Binary Search Version returns the index if search is successful -1 if search is unsuccessful
+	{
+		if (Length <= 0)
+		{
+			return -1;
+		}
+		int low = 0, high = Length - 1;
+		
+	}
 };
 
 
 int main()
 {
-	
+	IntArray MyArray{ 10,20,30,40,50,60,70,80,90,100 };
 	return 0;
 }
