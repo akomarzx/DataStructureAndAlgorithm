@@ -100,7 +100,7 @@ public:
 			throw 1;
 		}
 	}
-	int Search(int Key)//Linear Search Version returns the index if search is successful -1 if search is unsuccessful
+	int LinearSearch(int Key)//Linear Search Version returns the index if search is successful -1 if search is unsuccessful
 	{
 		if (Length <= 0)
 		{
@@ -119,20 +119,61 @@ public:
 			return -1;
 		}
 	}
-	int Search(int Key)//Binary Search Version returns the index if search is successful -1 if search is unsuccessful
+	int BinarySearch(int Key)//Binary Search Version returns the index if search is successful -1 if search is unsuccessful
 	{
 		if (Length <= 0)
 		{
 			return -1;
 		}
-		int low = 0, high = Length - 1;
-		
+		int low = 0, high = Length - 1, middle;
+		while (low <= high)
+		{
+			middle = (low + high) / 2;
+			if (MemoryLocation[middle] == Key)
+			{
+				return middle;
+			}
+			else if (MemoryLocation[middle] > Key)
+			{
+				high = middle - 1;
+			}
+			else
+			{
+				low = middle + 1;
+			}
+		}
+		return -1;
+	}
+	int* GetArray()
+	{
+		return MemoryLocation;
 	}
 };
 
+int BinarySearch(int* MyArray, int low, int high, int key)
+{
+	if (low <= high)
+	{
+		int middle = (low + high) / 2;
+		if (MyArray[middle] == key)
+		{
+			return middle;
+		}
+		else if (MyArray[middle] > key)
+		{
+			return BinarySearch(MyArray, low, middle - 1, key);
+		}
+		else
+		{
+			return BinarySearch(MyArray, middle + 1, high, key);
+		}
+	}
+	return -1;
+}
 
 int main()
 {
-	IntArray MyArray{ 10,20,30,40,50,60,70,80,90,100 };
+	IntArray MyArray{ 10,20,30,40,50,60,70,80,90,100,110,120 };
+	std::cout << BinarySearch(MyArray.GetArray(), 0, MyArray.Size() - 1, 110);
 	return 0;
 }
