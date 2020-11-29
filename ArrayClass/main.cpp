@@ -11,8 +11,20 @@ class IntArray
 {
 private:
 	int* MemoryLocation;
-	size_t Capacity;
-	size_t Length;
+	size_t capacity;
+	size_t length;
+	void ReallocateAndResize()
+	{
+		capacity *= 2;
+		int* TempArray = new int[capacity];
+		for (int x{ 0 }; x < length; ++x)
+		{
+			TempArray[x] = MemoryLocation[x];
+		}
+		delete[]MemoryLocation;
+		MemoryLocation = TempArray;
+		TempArray = nullptr;
+	}
 public:
 	IntArray(const IntArray&) = delete;
 	~IntArray()
@@ -20,17 +32,17 @@ public:
 		delete[] MemoryLocation;
 	}
 	IntArray()
-	:Capacity{10},Length{0}
+	:capacity{10},length{0}
 	{
-		MemoryLocation = new int[Capacity];
+		MemoryLocation = new int[capacity];
 	}
 	IntArray(size_t Count)//Allocates n Memory for the array  
-		:Capacity{ Count }, Length{ 0 }
+		:capacity{ Count }, length{ 0 }
 	{
-		MemoryLocation = new int[Capacity];
+		MemoryLocation = new int[capacity];
 	}
 	IntArray(std::initializer_list<int>Initial_Elements)
-		:Capacity{Initial_Elements.size()}, Length{Initial_Elements.size()}
+		:capacity{Initial_Elements.size()}, length{Initial_Elements.size()}
 	{
 		MemoryLocation = new int[Initial_Elements.size()];
 		int CurrentIndex = 0;
@@ -43,7 +55,7 @@ public:
 	void Print()const
 	{
 		std::cout << '{';
-		for (size_t Index{ 0 }; Index < Length; ++Index)
+		for (size_t Index{ 0 }; Index < length; ++Index)
 		{
 			std::cout << MemoryLocation[Index]<< ' ';
 		}
@@ -51,15 +63,20 @@ public:
 	}
 	void Add(int New_Element)
 	{
-		if (Length < Capacity)
+		if (length < capacity)
 		{
-			MemoryLocation[Length] = New_Element;
-			++Length;
+			MemoryLocation[length] = New_Element;
+			++length;
+		}
+		else
+		{
+			ReallocateAndResize();
+			Add(New_Element);
 		}
 	}
-	int& at(size_t index)
+	int& at(size_t index)//Element Access with bounds Checking
 	{	
-			if (index < Length)
+			if (index < length && index >= 0)
 			{
 				return (MemoryLocation[index]);
 			}
@@ -70,30 +87,35 @@ public:
 	}
 	size_t Size()const
 	{
-		return Length;
+		return length;
 	}
 	void Insert(int Index, int Value)
 	{
-		if (Index >= 0 && Index <= Length)
+		if (Index >= 0 && Index < length && ++length <= capacity)
 		{
-			for (int x = Length; x > Index; --x)
+			for (size_t x = length; x > Index; --x)
 			{
 				MemoryLocation[x] = MemoryLocation[x - 1];
 			}
 			MemoryLocation[Index] = Value;
-			++Length;
+		}
+		else
+		{
+			--length;
+			ReallocateAndResize();
+			Insert(Index, Value);
 		}
 	}
 	void Delete(int Index)
 	{
-		if (Index >= 0 && Index < Length)
+		if (Index >= 0 && Index < length)
 		{
-			for (int CurrentIndex{ Index }; CurrentIndex < Length; ++CurrentIndex)
+			for (int CurrentIndex{ Index }; CurrentIndex < length; ++CurrentIndex)
 			{
 				MemoryLocation[CurrentIndex] = MemoryLocation[CurrentIndex + 1];
 			}
-			MemoryLocation[Length - 1] = 0;
-			--Length;
+			MemoryLocation[length - 1] = 0;
+			--length;
 		}
 		else
 		{
@@ -102,13 +124,13 @@ public:
 	}
 	int LinearSearch(int Key)//Linear Search Version returns the index if search is successful -1 if search is unsuccessful
 	{
-		if (Length <= 0)
+		if (length <= 0)
 		{
 			return -1;
 		}
 		else
 		{
-			for (int x{ 0 }; x < Length; ++x)
+			for (int x{ 0 }; x < length; ++x)
 			{
 				if (Key == MemoryLocation[x])
 				{
@@ -121,11 +143,11 @@ public:
 	}
 	int BinarySearch(int Key)//Binary Search Version returns the index if search is successful -1 if search is unsuccessful
 	{
-		if (Length <= 0)
+		if (length <= 0)
 		{
 			return -1;
 		}
-		int low = 0, high = Length - 1, middle;
+		size_t low = 0, high = length - 1, middle;
 		while (low <= high)
 		{
 			middle = (low + high) / 2;
@@ -144,9 +166,50 @@ public:
 		}
 		return -1;
 	}
+	int Max()const // Return the Highest Element in the array
+	{
+		int Max = MemoryLocation[0];
+		for (int x{ 0 }; x < length; ++x)
+		{
+			if (MemoryLocation[x] > Max)
+			{
+				Max = MemoryLocation[x];
+			}
+		}
+		return Max;
+	}
+	int Min()const // Return the Lowest Element in the array
+	{
+		int Min = MemoryLocation[0];
+		for (int x{ 0 }; x < length; ++x)
+		{
+			if (MemoryLocation[x] < Min)
+			{
+				Min = MemoryLocation[x];
+			}
+		}
+		return Min;
+	}
+	int Sum()const
+	{
+		int sum = MemoryLocation[0];
+		for (int x{ 1 }; x < length; ++x)
+		{
+			sum += MemoryLocation[x];
+		}
+		return sum;
+	}
+	float Average()const
+	{
+		return Sum() / static_cast<float>(length);
+	}
 	int* GetArray()
 	{
 		return MemoryLocation;
+	}
+	int Capacity()const
+	{
+		return capacity;
 	}
 };
 
@@ -173,7 +236,14 @@ int BinarySearch(int* MyArray, int low, int high, int key)
 
 int main()
 {
-	IntArray MyArray{ 10,20,30,40,50,60,70,80,90,100,110,120 };
-	std::cout << BinarySearch(MyArray.GetArray(), 0, MyArray.Size() - 1, 110);
+	IntArray myArray{3,6,10};
+	
+	std::cout <<"Current Capacity: " << myArray.Capacity() << '\n';
+	std::cout << "Current Length: " << myArray.Size() << '\n';
+
+	myArray.Add(20);
+
+	std::cout << "Current Capacity: " << myArray.Capacity() << '\n';
+	std::cout << "Current Length: " << myArray.Size() << '\n';
 	return 0;
 }
