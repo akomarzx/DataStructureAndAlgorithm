@@ -9,7 +9,7 @@ private:
 	void Swap(int* Value_A, int* Value_B); //Internal Function for LinearSearch improvement
 	void ReallocateAndResize();
 public:
-	IntArray(const IntArray&) = delete;
+	IntArray(const IntArray& Source);
 	~IntArray();
 	IntArray();
 	IntArray(size_t Count);//Allocates n Memory for the array  

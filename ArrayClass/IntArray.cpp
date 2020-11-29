@@ -42,6 +42,17 @@ IntArray::IntArray(std::initializer_list<int>Initial_Elements)
 		++CurrentIndex;
 	}
 }
+
+IntArray::IntArray(const IntArray& Source)
+	:capacity{Source.capacity} , length{Source.length}
+{
+	MemoryLocation = new int[capacity];
+	for (int x{ 0 }; x < length; ++x)
+	{
+		this->MemoryLocation[x] = Source.MemoryLocation[x];
+	}
+}
+
 IntArray::~IntArray()
 {
 	delete[] MemoryLocation;
