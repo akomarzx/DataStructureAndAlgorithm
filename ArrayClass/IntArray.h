@@ -21,7 +21,7 @@ public:
 	void Insert(int Index, int Value);//Insert Element at Index 
 	void Delete(int Index);
 	int LinearSearch(int Key);//Linear Search Version returns the index if search is successful -1 if search is unsuccessful
-	int BinarySearch(int Key)const;//Iterative Version of Binary Search Version returns the index if search is successful -1 if search is unsuccessful
+	int BinarySearch(int Key)const;//NOTE: Only use for Sorted Array.terative Version of Binary Search Version returns the index if search is successful -1 if search is unsuccessful
 	int Max()const; // Return the Highest Element in the array
 	int Min()const; // Return the Lowest Element in the array
 	int Sum()const;
