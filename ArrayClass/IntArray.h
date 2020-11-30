@@ -5,7 +5,38 @@ class IntArrayIterator
 private:
 	int* Pointer;
 public:
-	IntArrayIterator(int* m_Ptr) {}
+	IntArrayIterator(int* m_Ptr) 
+		: Pointer{ m_Ptr } {}
+	IntArrayIterator& operator++()
+	{
+		++Pointer;
+		return *this;
+	}
+	IntArrayIterator& operator++(int)
+	{
+		IntArrayIterator iterator = *this;
+		++(*this);
+		return iterator;
+	}
+	IntArrayIterator& operator--()
+	{
+		--Pointer;
+		return *this;
+	}
+	IntArrayIterator& operator--(int)
+	{
+		IntArrayIterator iterator = *this;
+		--(*this);
+		return iterator;
+	}
+	bool operator==(const IntArrayIterator& OtherValue)const
+	{
+		return (this->Pointer == OtherValue.Pointer);
+	}
+	bool operator!=(const IntArrayIterator& OtherValue)const
+	{
+		return !(this->Pointer == OtherValue.Pointer);
+	}
 };
 
 class IntArray
