@@ -22,7 +22,5 @@ int main()
 	std::cout << "Current Length: " << myArray.Size() << '\n';
 
 
-
-
 	return 0;
 }

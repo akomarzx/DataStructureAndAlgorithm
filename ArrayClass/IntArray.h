@@ -29,6 +29,14 @@ public:
 		--(*this);
 		return iterator;
 	}
+	int operator[](int index)
+	{
+		return *(Pointer + index);
+	}
+	int operator*()const
+	{
+		return *Pointer;
+	}
 	bool operator==(const IntArrayIterator& OtherValue)const
 	{
 		return (this->Pointer == OtherValue.Pointer);
