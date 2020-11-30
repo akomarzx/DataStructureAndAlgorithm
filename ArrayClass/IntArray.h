@@ -1,8 +1,17 @@
 #pragma once
 #include<initializer_list>
+class IntArrayIterator
+{
+private:
+	int* Pointer;
+public:
+	IntArrayIterator(int* m_Ptr) {}
+};
+
 class IntArray
 {
 private:
+	using iterator = IntArrayIterator;
 	int* MemoryLocation;
 	size_t capacity;
 	size_t length;
@@ -28,4 +37,6 @@ public:
 	float Average()const;
 	int* GetArray()const;
 	int Capacity()const;
+	iterator begin();
+	iterator end();
 };

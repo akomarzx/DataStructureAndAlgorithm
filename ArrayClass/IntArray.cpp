@@ -230,3 +230,13 @@ int IntArray::Capacity() const
 {
 	return capacity;
 }
+
+IntArray::iterator IntArray::begin()
+{
+	return MemoryLocation;
+}
+
+IntArray::iterator IntArray::end()
+{
+	return(MemoryLocation + length);
+}

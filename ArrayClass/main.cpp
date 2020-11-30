@@ -1,10 +1,6 @@
 #include<iostream>
 #include"IntArray.h"
-
-void foo(IntArray myarray)
-{
-	return;
-}
+#include<vector>
 
 int main()
 {
@@ -24,6 +20,7 @@ int main()
 	
 	myArray.Print();
 	std::cout << "Current Length: " << myArray.Size() << '\n';
+
 
 
 
