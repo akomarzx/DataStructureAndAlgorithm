@@ -67,15 +67,16 @@ public:
 	int& at(size_t index);//Element Access with bounds Checking
 	size_t Size()const;
 	void Insert(int Index, int Value);//Insert Element at Index 
-	void Delete(int Index);
+	void Delete(int Index);//Removes The element at chosen index
 	int LinearSearch(int Key);//Linear Search Version returns the index if search is successful -1 if search is unsuccessful
 	int BinarySearch(int Key)const;//NOTE:	Only use for Sorted Array.terative Version of Binary Search Version returns the index if search is successful -1 if search is unsuccessful
 	int Max()const; // Return the Highest Element in the array
 	int Min()const; // Return the Lowest Element in the array
-	int Sum()const;
+	int Sum()const;	
 	float Average()const;
 	int* GetArray()const;
 	int Capacity()const;
+	void Reverse();
 	iterator begin();
 	iterator end();
 };

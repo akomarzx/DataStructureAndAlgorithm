@@ -4,7 +4,7 @@
 
 int main()
 {
-	IntArray myArray{3,6,10};
+	IntArray myArray{3,6,10,30, 43};
 	
 	std::cout <<"Current Capacity: " << myArray.Capacity() << '\n';
 	std::cout << "Current Length: " << myArray.Size() << '\n';
@@ -21,6 +21,8 @@ int main()
 	myArray.Print();
 	std::cout << "Current Length: " << myArray.Size() << '\n';
 
-
+	myArray.Reverse();
+	myArray.Print();
+	
 	return 0;
 }

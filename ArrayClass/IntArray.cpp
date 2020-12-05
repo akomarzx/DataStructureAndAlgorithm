@@ -1,6 +1,7 @@
 #include "IntArray.h"
 #include<initializer_list>
 #include<iostream>
+#include<list>
 void IntArray::Swap(int* Value_A, int* Value_B)
 {
 	int Temp = *Value_A;
@@ -26,7 +27,7 @@ IntArray::IntArray(size_t Count)//Allocates n Memory for the array
 	MemoryLocation = new int[capacity];
 }
 
-IntArray::IntArray()
+IntArray::IntArray()//Default Constructor allocates 10 memory space.
 	: capacity{ 10 }, length{ 0 }
 {
 	MemoryLocation = new int[capacity];
@@ -229,6 +230,18 @@ int* IntArray::GetArray() const
 int IntArray::Capacity() const
 {
 	return capacity;
+}
+
+void IntArray::Reverse()
+{
+	int* TempArray = new int[capacity];
+	for (size_t x{ 0 }, y{ length - 1 } ; x < length ; ++x , --y)
+	{
+		TempArray[x] = MemoryLocation[y];
+	}
+	delete[]MemoryLocation;
+	MemoryLocation = TempArray;
+	TempArray = nullptr;
 }
 
 IntArray::iterator IntArray::begin()
