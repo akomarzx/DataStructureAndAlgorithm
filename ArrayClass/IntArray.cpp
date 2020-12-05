@@ -244,12 +244,50 @@ void IntArray::Reverse()
 	TempArray = nullptr;
 }
 
-IntArray::iterator IntArray::begin()
+void IntArray::LeftShift()
+{
+	for (int x {0} ; x < length ; ++x)
+	{
+		MemoryLocation[x] = MemoryLocation[x + 1];
+	}
+	MemoryLocation[length - 1] = 0;
+}
+
+void IntArray::RightShift()
+{
+	for (int x = length - 1; x >= 0 ; --x)
+	{
+		MemoryLocation[x] = MemoryLocation[x - 1];
+	}
+	MemoryLocation[0] = 0;
+}
+
+void IntArray::RightRotate()
+{
+	 int temp = MemoryLocation[length - 1];
+	for (int x = length - 1; x >= 0; --x)
+	{
+		MemoryLocation[x] = MemoryLocation[x - 1];
+	}
+	MemoryLocation[0] = temp;
+}
+
+void IntArray::LeftRotate()
+{
+	int temp = MemoryLocation[0];
+	for (int x{ 0 }; x < length; ++x)
+	{
+		MemoryLocation[x] = MemoryLocation[x + 1];
+	}
+	MemoryLocation[length - 1] = temp;
+}
+
+IntArray::iterator IntArray::begin()const
 {
 	return MemoryLocation;
 }
 
-IntArray::iterator IntArray::end()
+IntArray::iterator IntArray::end()const
 {
 	return(MemoryLocation + length);
 }

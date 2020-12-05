@@ -77,6 +77,10 @@ public:
 	int* GetArray()const;
 	int Capacity()const;
 	void Reverse();
-	iterator begin();
-	iterator end();
+	void LeftShift();
+	void RightShift();
+	void RightRotate();
+	void LeftRotate();
+	iterator begin()const;
+	iterator end()const;
 };
