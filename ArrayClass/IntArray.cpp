@@ -81,6 +81,7 @@ void IntArray::Add(int New_Element)
 		ReallocateAndResize();
 		Add(New_Element);
 	}
+	IsArraySorted = false;
 }
 
 int& IntArray::at(size_t index) //Element Access with bounds Checking
@@ -93,6 +94,7 @@ int& IntArray::at(size_t index) //Element Access with bounds Checking
 	{
 		throw "Testing";
 	}
+	IsArraySorted = false;
 }
 
 size_t IntArray::Size() const
@@ -116,6 +118,7 @@ void IntArray::Insert(int Index, int Value)
 		ReallocateAndResize();
 		Insert(Index, Value);
 	}
+	IsArraySorted = false;
 }
 
 void IntArray::Delete(int Index)
@@ -133,6 +136,7 @@ void IntArray::Delete(int Index)
 	{
 		throw 1;
 	}
+	IsArraySorted = false;
 }
 
 int IntArray::LinearSearch(int Key)
@@ -251,6 +255,7 @@ void IntArray::LeftShift()
 		MemoryLocation[x] = MemoryLocation[x + 1];
 	}
 	MemoryLocation[length - 1] = 0;
+	IsArraySorted = false;
 }
 
 void IntArray::RightShift()
@@ -260,6 +265,7 @@ void IntArray::RightShift()
 		MemoryLocation[x] = MemoryLocation[x - 1];
 	}
 	MemoryLocation[0] = 0;
+	IsArraySorted = false;
 }
 
 void IntArray::RightRotate()
@@ -270,6 +276,7 @@ void IntArray::RightRotate()
 		MemoryLocation[x] = MemoryLocation[x - 1];
 	}
 	MemoryLocation[0] = temp;
+	IsArraySorted = false;
 }
 
 void IntArray::LeftRotate()
@@ -280,6 +287,23 @@ void IntArray::LeftRotate()
 		MemoryLocation[x] = MemoryLocation[x + 1];
 	}
 	MemoryLocation[length - 1] = temp;
+	IsArraySorted = false;
+}
+
+bool IntArray::IsSorted()
+{
+	if (!IsArraySorted)
+	{
+		for (int x{ 0 }; x < length - 1; ++x)
+		{
+			if (MemoryLocation[x] > MemoryLocation[x + 1])
+			{
+				return false;
+			}
+		}
+	}
+	IsArraySorted = true;
+	return true;
 }
 
 IntArray::iterator IntArray::begin()const
