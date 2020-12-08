@@ -21,7 +21,8 @@ void IntArray::ReallocateAndResize()
 	MemoryLocation = TempArray;
 	TempArray = nullptr;
 }
-IntArray::IntArray(size_t Count)//Allocates n Memory for the array  
+
+IntArray::IntArray(size_t Count)//Allocates n Memory for the array
 	:capacity{ Count }, length{ 0 }
 {
 	MemoryLocation = new int[capacity];
@@ -33,7 +34,7 @@ IntArray::IntArray()//Default Constructor allocates 10 memory space.
 	MemoryLocation = new int[capacity];
 }
 IntArray::IntArray(std::initializer_list<int>Initial_Elements)
-	:capacity{ Initial_Elements.size() }, length{ Initial_Elements.size() }
+	: capacity{ Initial_Elements.size() }, length{ Initial_Elements.size() }
 {
 	MemoryLocation = new int[Initial_Elements.size()];
 	int CurrentIndex = 0;
@@ -45,7 +46,7 @@ IntArray::IntArray(std::initializer_list<int>Initial_Elements)
 }
 
 IntArray::IntArray(const IntArray& Source)
-	:capacity{Source.capacity} , length{Source.length}
+	:capacity{ Source.capacity }, length{ Source.length }
 {
 	MemoryLocation = new int[capacity];
 	for (int x{ 0 }; x < length; ++x)
@@ -185,7 +186,7 @@ int IntArray::BinarySearch(int Key) const
 	return -1;
 }
 
-int IntArray::Max() const 
+int IntArray::Max() const
 {
 	int Max = MemoryLocation[0];
 	for (int x{ 0 }; x < length; ++x)
@@ -198,7 +199,7 @@ int IntArray::Max() const
 	return Max;
 }
 
-int IntArray::Min() const 
+int IntArray::Min() const
 {
 	int Min = MemoryLocation[0];
 	for (int x{ 0 }; x < length; ++x)
@@ -239,7 +240,7 @@ int IntArray::Capacity() const
 void IntArray::Reverse()
 {
 	int* TempArray = new int[capacity];
-	for (size_t x{ 0 }, y{ length - 1 } ; x < length ; ++x , --y)
+	for (size_t x{ 0 }, y{ length - 1 }; x < length; ++x, --y)
 	{
 		TempArray[x] = MemoryLocation[y];
 	}
@@ -250,7 +251,7 @@ void IntArray::Reverse()
 
 void IntArray::LeftShift()
 {
-	for (int x {0} ; x < length ; ++x)
+	for (int x{ 0 }; x < length; ++x)
 	{
 		MemoryLocation[x] = MemoryLocation[x + 1];
 	}
@@ -260,7 +261,7 @@ void IntArray::LeftShift()
 
 void IntArray::RightShift()
 {
-	for (int x = length - 1; x >= 0 ; --x)
+	for (int x = length - 1; x >= 0; --x)
 	{
 		MemoryLocation[x] = MemoryLocation[x - 1];
 	}
@@ -270,7 +271,7 @@ void IntArray::RightShift()
 
 void IntArray::RightRotate()
 {
-	 int temp = MemoryLocation[length - 1];
+	int temp = MemoryLocation[length - 1];
 	for (int x = length - 1; x >= 0; --x)
 	{
 		MemoryLocation[x] = MemoryLocation[x - 1];
@@ -304,6 +305,10 @@ bool IntArray::IsSorted()
 	}
 	IsArraySorted = true;
 	return true;
+}
+
+void IntArray::InsertInSortedArray()
+{
 }
 
 IntArray::iterator IntArray::begin()const

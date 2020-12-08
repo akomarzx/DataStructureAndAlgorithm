@@ -57,6 +57,7 @@ private:
 	void Swap(int* Value_A, int* Value_B); //Internal Function for LinearSearch improvement
 	void ReallocateAndResize();
 	bool IsArraySorted = false;
+	void InsertInSortedArray();
 public:
 	IntArray(const IntArray& Source);
 	~IntArray();
