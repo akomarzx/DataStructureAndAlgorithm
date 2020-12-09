@@ -57,7 +57,7 @@ private:
 	void Swap(int* Value_A, int* Value_B); //Internal Function for LinearSearch improvement
 	void ReallocateAndResize();
 	bool IsArraySorted = false;
-	void InsertInSortedArray();
+	void InsertInSortedArray();//Internal Function for inserting in a sorted sorry
 public:
 	IntArray(const IntArray& Source);
 	~IntArray();
@@ -71,7 +71,7 @@ public:
 	void Insert(int Index, int Value);//Insert Element at Index 
 	void Delete(int Index);//Removes The element at chosen index
 	int LinearSearch(int Key);//Linear Search Version returns the index if search is successful -1 if search is unsuccessful
-	int BinarySearch(int Key)const;//NOTE:	Only use for Sorted Array.iterative Version of Binary Search Version returns the index if search is successful -1 if search is unsuccessful
+	int BinarySearch(int Key);//NOTE:	Only use for Sorted Array.iterative Version of Binary Search Version returns the index if search is successful -1 if search is unsuccessful
 	int Max()const; // Return the Highest Element in the array
 	int Min()const; // Return the Lowest Element in the array
 	int Sum()const;	

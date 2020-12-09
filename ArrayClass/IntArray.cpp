@@ -82,7 +82,10 @@ void IntArray::Add(int New_Element)
 		ReallocateAndResize();
 		Add(New_Element);
 	}
-	IsArraySorted = false;
+	if (New_Element < MemoryLocation[length - 1])
+	{
+		IsArraySorted = false;
+	}
 }
 
 int& IntArray::at(size_t index) //Element Access with bounds Checking
@@ -105,21 +108,22 @@ size_t IntArray::Size() const
 
 void IntArray::Insert(int Index, int Value)
 {
-	if (Index >= 0 && Index < length && ++length <= capacity)
-	{
-		for (size_t x = length; x > Index; --x)
+		if (Index >= 0 && Index < length && ++length <= capacity)
 		{
-			MemoryLocation[x] = MemoryLocation[x - 1];
+			for (size_t x = length; x > Index; --x)
+			{
+				MemoryLocation[x] = MemoryLocation[x - 1];
+			}
+			MemoryLocation[Index] = Value;
 		}
-		MemoryLocation[Index] = Value;
-	}
-	else
-	{
-		--length;
-		ReallocateAndResize();
-		Insert(Index, Value);
-	}
-	IsArraySorted = false;
+		else
+		{
+			--length;
+			ReallocateAndResize();
+			Insert(Index, Value);
+		}
+		IsArraySorted = false;
+	
 }
 
 void IntArray::Delete(int Index)
@@ -160,27 +164,30 @@ int IntArray::LinearSearch(int Key)
 	}
 }
 
-int IntArray::BinarySearch(int Key) const
+int IntArray::BinarySearch(int Key) 
 {
-	if (length <= 0)
+	if (IsSorted())
 	{
-		return -1;
-	}
-	size_t low = 0, high = length - 1, middle;
-	while (low <= high)
-	{
-		middle = (low + high) / 2;
-		if (MemoryLocation[middle] == Key)
+		if (length <= 0)
 		{
-			return middle;
+			return -1;
 		}
-		else if (MemoryLocation[middle] > Key)
+		size_t low = 0, high = length - 1, middle;
+		while (low <= high)
 		{
-			high = middle - 1;
-		}
-		else
-		{
-			low = middle + 1;
+			middle = (low + high) / 2;
+			if (MemoryLocation[middle] == Key)
+			{
+				return middle;
+			}
+			else if (MemoryLocation[middle] > Key)
+			{
+				high = middle - 1;
+			}
+			else
+			{
+				low = middle + 1;
+			}
 		}
 	}
 	return -1;
@@ -266,7 +273,6 @@ void IntArray::RightShift()
 		MemoryLocation[x] = MemoryLocation[x - 1];
 	}
 	MemoryLocation[0] = 0;
-	IsArraySorted = false;
 }
 
 void IntArray::RightRotate()
@@ -309,6 +315,7 @@ bool IntArray::IsSorted()
 
 void IntArray::InsertInSortedArray()
 {
+
 }
 
 IntArray::iterator IntArray::begin()const
