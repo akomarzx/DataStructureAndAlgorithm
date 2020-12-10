@@ -126,6 +126,35 @@ void IntArray::Insert(int Index, int Value)
 	
 }
 
+bool IntArray::Insert(int Value) // Returns False if the array is not sorted return true if insertion is successful the array is sorted. 
+{
+	if (IsSorted())
+	{
+		if (length < capacity)
+		{
+			for (int x = length; x >= 0; --x)
+			{
+				if (Value > MemoryLocation[x - 1])
+				{
+					MemoryLocation[x] = Value;
+					++length;
+					return true;
+				}
+				else
+				{
+					MemoryLocation[x] = MemoryLocation[x - 1];
+				}
+			}
+			return false;
+		}
+		else
+		{
+			ReallocateAndResize();
+			Insert(Value);
+		}
+	}
+}
+
 void IntArray::Delete(int Index)
 {
 	if (Index >= 0 && Index < length)
@@ -311,11 +340,6 @@ bool IntArray::IsSorted()
 	}
 	IsArraySorted = true;
 	return true;
-}
-
-void IntArray::InsertInSortedArray()
-{
-
 }
 
 IntArray::iterator IntArray::begin()const

@@ -57,7 +57,6 @@ private:
 	void Swap(int* Value_A, int* Value_B); //Internal Function for LinearSearch improvement
 	void ReallocateAndResize();
 	bool IsArraySorted = false;
-	void InsertInSortedArray();//Internal Function for inserting in a sorted sorry
 public:
 	IntArray(const IntArray& Source);
 	~IntArray();
@@ -69,6 +68,7 @@ public:
 	int& at(size_t index);//Element Access with bounds Checking
 	size_t Size()const;
 	void Insert(int Index, int Value);//Insert Element at Index 
+	bool Insert(int Value); // Returns False if the array is not sorted return true if insertion is successful the array is sorted. 
 	void Delete(int Index);//Removes The element at chosen index
 	int LinearSearch(int Key);//Linear Search Version returns the index if search is successful -1 if search is unsuccessful
 	int BinarySearch(int Key);//NOTE:	Only use for Sorted Array.iterative Version of Binary Search Version returns the index if search is successful -1 if search is unsuccessful
