@@ -82,7 +82,7 @@ void IntArray::Add(int New_Element)
 		ReallocateAndResize();
 		Add(New_Element);
 	}
-	if (New_Element < MemoryLocation[length - 1])
+	if (New_Element < MemoryLocation[length - 2])//We have to compare the element with the element before it. if i use the length it will be compare to itself so we have to offset two index to reach the last element before insertion
 	{
 		IsArraySorted = false;
 	}
