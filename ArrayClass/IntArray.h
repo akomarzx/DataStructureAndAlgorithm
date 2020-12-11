@@ -51,11 +51,11 @@ class IntArray
 {
 private:
 	using iterator = IntArrayIterator;
-	int* MemoryLocation;
+	mutable int* MemoryLocation;
 	size_t capacity;
 	size_t length;
 	void Swap(int* Value_A, int* Value_B); //Internal Function for LinearSearch improvement
-	void ReallocateAndResize();
+	void ReallocateAndResize(int Extra);
 	bool IsArraySorted = false;
 public:
 	IntArray(const IntArray& Source);
@@ -87,4 +87,5 @@ public:
 	iterator begin()const;
 	iterator end()const;
 	void NegativeRotate();
+	void Merge(const IntArray& OtherArray);
 };

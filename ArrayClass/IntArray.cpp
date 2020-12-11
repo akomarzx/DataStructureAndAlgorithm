@@ -9,9 +9,9 @@ void IntArray::Swap(int* Value_A, int* Value_B)
 	*Value_B = Temp;
 }
 
-void IntArray::ReallocateAndResize()
+void IntArray::ReallocateAndResize(int Extra)
 {
-	capacity *= 2;
+	capacity *= (2 + Extra);
 	int* TempArray = new int[capacity];
 	for (int x{ 0 }; x < length; ++x)
 	{
@@ -79,7 +79,7 @@ void IntArray::push_back(int New_Element)
 	}
 	else
 	{
-		ReallocateAndResize();
+		ReallocateAndResize(0);
 		push_back(New_Element);
 	}
 	if (New_Element < MemoryLocation[length - 2])//We have to compare the element with the element before it. if i use the length it will be compare to itself so we have to offset two index to reach the last element before insertion
@@ -119,7 +119,7 @@ void IntArray::Insert(int Index, int Value)
 		else
 		{
 			--length;
-			ReallocateAndResize();
+			ReallocateAndResize(0);
 			Insert(Index, Value);
 		}
 		IsArraySorted = false;
@@ -149,7 +149,7 @@ bool IntArray::Insert(int Value) // Returns False if the array is not sorted ret
 		}
 		else
 		{
-			ReallocateAndResize();
+			ReallocateAndResize(0);
 			Insert(Value);
 		}
 	}
@@ -367,5 +367,14 @@ void IntArray::NegativeRotate()
 				}
 			}
 		}
+	}
+}
+
+void IntArray::Merge(const IntArray& OtherArray)
+{
+	ReallocateAndResize(OtherArray.length);
+	for (size_t x{ 0 }; x < OtherArray.length; ++x)
+	{
+		this->push_back(OtherArray.MemoryLocation[x]);
 	}
 }
