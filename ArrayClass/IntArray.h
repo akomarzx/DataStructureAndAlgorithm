@@ -64,7 +64,7 @@ public:
 	explicit IntArray(size_t Count);//Allocates n Memory for the array  
 	IntArray(std::initializer_list<int>Initial_Elements);
 	void Print()const;
-	void Add(int New_Element);
+	void push_back(int New_Element);
 	int& at(size_t index);//Element Access with bounds Checking
 	size_t Size()const;
 	void Insert(int Index, int Value);//Insert Element at Index 

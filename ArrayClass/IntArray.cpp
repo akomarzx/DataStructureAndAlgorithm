@@ -70,7 +70,7 @@ void IntArray::Print() const
 	std::cout << '}' << '\n';
 }
 
-void IntArray::Add(int New_Element)
+void IntArray::push_back(int New_Element)
 {
 	if (length < capacity)
 	{
@@ -80,7 +80,7 @@ void IntArray::Add(int New_Element)
 	else
 	{
 		ReallocateAndResize();
-		Add(New_Element);
+		push_back(New_Element);
 	}
 	if (New_Element < MemoryLocation[length - 2])//We have to compare the element with the element before it. if i use the length it will be compare to itself so we have to offset two index to reach the last element before insertion
 	{
