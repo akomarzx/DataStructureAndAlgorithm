@@ -86,4 +86,5 @@ public:
 	bool IsSorted();
 	iterator begin()const;
 	iterator end()const;
+	void NegativeRotate();
 };

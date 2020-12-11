@@ -351,3 +351,21 @@ IntArray::iterator IntArray::end()const
 {
 	return(MemoryLocation + length);
 }
+
+void IntArray::NegativeRotate()
+{
+	for (size_t OuterLoop{ length - 1 }; OuterLoop > 0; --OuterLoop)
+	{
+		if (MemoryLocation[OuterLoop] < 0)
+		{
+			for (int InnerLoop{ 0 }; InnerLoop < OuterLoop; ++InnerLoop)
+			{
+				if (MemoryLocation[InnerLoop] > 0)
+				{
+					Swap((MemoryLocation + OuterLoop), (MemoryLocation + InnerLoop));
+					break;
+				}
+			}
+		}
+	}
+}
