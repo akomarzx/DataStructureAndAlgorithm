@@ -9,7 +9,7 @@ void IntArray::Swap(int* Value_A, int* Value_B)
 	*Value_B = Temp;
 }
 
-void IntArray::ReallocateAndResize(int Extra)
+void IntArray::ReallocateAndResize(size_t Extra)
 {
 	capacity *= (2 + Extra);
 	int* TempArray = new int[capacity];
