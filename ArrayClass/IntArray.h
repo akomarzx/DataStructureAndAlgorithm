@@ -5,7 +5,7 @@ class IntArrayIterator
 private:
 	int* Pointer;
 public:
-	IntArrayIterator(int* m_Ptr) 
+	IntArrayIterator(int* m_Ptr)
 		: Pointer{ m_Ptr } {}
 	IntArrayIterator& operator++()
 	{
@@ -61,20 +61,20 @@ public:
 	IntArray(const IntArray& Source);
 	~IntArray();
 	IntArray();
-	explicit IntArray(size_t Count);//Allocates n Memory for the array  
+	explicit IntArray(size_t Count);//Allocates n Memory for the array
 	IntArray(std::initializer_list<int>Initial_Elements);
 	void Print()const;
 	void push_back(int New_Element);
 	int& at(size_t index);//Element Access with bounds Checking
 	size_t Size()const;
-	void Insert(int Index, int Value);//Insert Element at Index 
-	bool Insert(int Value); // Returns False if the array is not sorted return true if insertion is successful the array is sorted. 
+	void Insert(int Index, int Value);//Insert Element at Index
+	bool Insert(int Value); // Returns False if the array is not sorted return true if insertion is successful the array is sorted.
 	void Delete(int Index);//Removes The element at chosen index
 	int LinearSearch(int Key);//Linear Search Version returns the index if search is successful -1 if search is unsuccessful
 	int BinarySearch(int Key);//NOTE:	Only use for Sorted Array.iterative Version of Binary Search Version returns the index if search is successful -1 if search is unsuccessful
 	int Max()const; // Return the Highest Element in the array
 	int Min()const; // Return the Lowest Element in the array
-	int Sum()const;	
+	int Sum()const;
 	float Average()const;
 	int* GetArray()const;
 	int Capacity()const;
@@ -88,5 +88,5 @@ public:
 	iterator end()const;
 	void NegativeRotate();
 	void Merge(const IntArray& OtherArray);
-	bool MergeAndSort(const IntArray& OtherArray);// Merge Two Sorted Arrays Returns false if one of the array is not sorted and true if array is merged successfully.
+	bool MergeAndSort(IntArray& OtherArray);// Merge Two Sorted Arrays Returns false if one of the array is not sorted and true if array is merged successfully.
 };

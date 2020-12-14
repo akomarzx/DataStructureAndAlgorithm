@@ -108,25 +108,24 @@ size_t IntArray::Size() const
 
 void IntArray::Insert(int Index, int Value)
 {
-		if (Index >= 0 && Index < length && ++length <= capacity)
+	if (Index >= 0 && Index < length && ++length <= capacity)
+	{
+		for (size_t x = length; x > Index; --x)
 		{
-			for (size_t x = length; x > Index; --x)
-			{
-				MemoryLocation[x] = MemoryLocation[x - 1];
-			}
-			MemoryLocation[Index] = Value;
+			MemoryLocation[x] = MemoryLocation[x - 1];
 		}
-		else
-		{
-			--length;
-			ReallocateAndResize(0);
-			Insert(Index, Value);
-		}
-		IsArraySorted = false;
-	
+		MemoryLocation[Index] = Value;
+	}
+	else
+	{
+		--length;
+		ReallocateAndResize(0);
+		Insert(Index, Value);
+	}
+	IsArraySorted = false;
 }
 
-bool IntArray::Insert(int Value) // Returns False if the array is not sorted return true if insertion is successful the array is sorted. 
+bool IntArray::Insert(int Value) // Returns False if the array is not sorted return true if insertion is successful the array is sorted.
 {
 	if (IsSorted())
 	{
@@ -193,7 +192,7 @@ int IntArray::LinearSearch(int Key)
 	}
 }
 
-int IntArray::BinarySearch(int Key) 
+int IntArray::BinarySearch(int Key)
 {
 	if (IsSorted())
 	{
@@ -376,5 +375,49 @@ void IntArray::Merge(const IntArray& OtherArray)
 	for (size_t x{ 0 }; x < OtherArray.length; ++x)
 	{
 		this->push_back(OtherArray.MemoryLocation[x]);
+	}
+}
+
+bool IntArray::MergeAndSort(IntArray& OtherArray)
+{
+	if (this->IsSorted() && OtherArray.IsSorted())
+	{
+		int arr1 = 0, arr2 = 0, arr3 = 0;
+		int TempArrayCap = length + OtherArray.length;
+		int* TempArray = new int[TempArrayCap];
+		while (arr1 < length && arr2 < OtherArray.length)
+		{
+			if (MemoryLocation[arr1] < OtherArray.MemoryLocation[arr2])
+			{
+				TempArray[arr3] = MemoryLocation[arr1];
+				++arr1;
+			}
+			else
+			{
+				TempArray[arr3] = OtherArray.MemoryLocation[arr2];
+				++arr2;
+
+			}
+			++arr3;
+		}
+		for (; arr1 < length; ++arr1)
+		{
+			TempArray[arr3] = MemoryLocation[arr1];
+			++arr3;
+		}
+		for (; arr2 < OtherArray.length; ++arr2)
+		{
+			TempArray[arr3] = OtherArray.MemoryLocation[arr2];
+			++arr3;
+		}
+		delete[]MemoryLocation;
+		MemoryLocation = TempArray;
+		TempArray = nullptr;
+		length = TempArrayCap;
+		return true;
+	}
+	else
+	{
+		return false;
 	}
 }
