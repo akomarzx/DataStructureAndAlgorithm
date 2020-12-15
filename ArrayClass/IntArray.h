@@ -1,5 +1,15 @@
 #pragma once
 #include<initializer_list>
+
+class IntArray;
+
+namespace SetOperation
+{
+	IntArray Union(IntArray& Array1, IntArray& Array2);
+	IntArray Intersection(const IntArray& Array1, const IntArray& Array2);
+	IntArray Difference(const IntArray& Array1, const IntArray& Array2);
+}
+
 class IntArrayIterator
 {
 private:
@@ -51,6 +61,9 @@ class IntArray
 {
 private:
 	using iterator = IntArrayIterator;
+	friend IntArray SetOperation::Union(IntArray& Array1,IntArray& Array2);
+	friend IntArray SetOperation::Intersection(IntArray& Array1, IntArray& Array2);
+	friend IntArray SetOperation::Difference(IntArray& Array1,IntArray& Array2);
 	mutable int* MemoryLocation;
 	size_t capacity;
 	size_t length;

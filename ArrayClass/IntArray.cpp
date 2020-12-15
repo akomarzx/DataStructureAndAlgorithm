@@ -421,3 +421,34 @@ bool IntArray::MergeAndSort(IntArray& OtherArray)
 		return false;
 	}
 }
+
+IntArray SetOperation::Union(IntArray& Array1, IntArray& Array2)
+{
+	int arr1 = 0, arr2 = 0, arr3 = 0;
+	IntArray TempArray;
+	while (arr1 < Array1.length && arr2 < Array2.length)
+	{
+		if (Array1[arr1] == Array2[arr2])
+		{
+			++arr1;
+			++arr2;
+		}
+		else if (Array1.MemoryLocation[arr1] < Array2.MemoryLocation[arr2])
+		{	
+			TempArray.push_back(Array1);
+			++arr1;
+		}
+		else
+		{
+			TempArray.push_back(Array2[arr2]);
+			++arr2;
+		}
+	}
+	for (; arr1 < Array1.length; ++arr1)
+	{
+	}
+	for (; arr2 <Array2.length; ++arr2)
+	{
+	}
+	return TempArray;
+}
