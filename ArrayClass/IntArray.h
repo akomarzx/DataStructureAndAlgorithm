@@ -6,8 +6,8 @@ class IntArray;
 namespace SetOperation
 {
 	IntArray Union(IntArray& Array1, IntArray& Array2);
-	IntArray Intersection(const IntArray& Array1, const IntArray& Array2);
-	IntArray Difference(const IntArray& Array1, const IntArray& Array2);
+	IntArray Intersection(IntArray& Array1, IntArray& Array2);
+	IntArray Difference(IntArray& Array1, IntArray& Array2);
 }
 
 class IntArrayIterator
