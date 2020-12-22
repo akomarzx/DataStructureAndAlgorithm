@@ -1,13 +1,13 @@
 #include<iostream>
-#include"IntArray.h"
+#include"Array.h"
 #include<vector>
 
 
 int main()
 {
-	IntArray array1{2,5,9,12,16,18 };
-	IntArray array2{5,10,16,17,18};
-	IntArray array3 = SetOperation::Difference(array1, array2);
+	Array array1{2,5,9,12,16,18 };
+	Array array2{5,10,16,17,18};
+	Array array3 = SetOperation::Union(array1, array2);
 	
 	array3.Print();
 

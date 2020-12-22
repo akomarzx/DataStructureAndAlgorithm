@@ -1,15 +1,15 @@
-#include "IntArray.h"
+#include "Array.h"
 #include<initializer_list>
 #include<iostream>
 #include<list>
-void IntArray::Swap(int* Value_A, int* Value_B)
+void Array::Swap(int* Value_A, int* Value_B)
 {
 	int Temp = *Value_A;
 	*Value_A = *Value_B;
 	*Value_B = Temp;
 }
 
-void IntArray::ReallocateAndResize(size_t Extra)
+void Array::ReallocateAndResize(size_t Extra)
 {
 	capacity *= (2 + Extra);
 	int* TempArray = new int[capacity];
@@ -22,18 +22,18 @@ void IntArray::ReallocateAndResize(size_t Extra)
 	TempArray = nullptr;
 }
 
-IntArray::IntArray(size_t Count)//Allocates n Memory for the array
+Array::Array(size_t Count)//Allocates n Memory for the array
 	:capacity{ Count }, length{ 0 }
 {
 	MemoryLocation = new int[capacity];
 }
 
-IntArray::IntArray()//Default Constructor allocates 10 memory space.
+Array::Array()//Default Constructor allocates 10 memory space.
 	: capacity{ 10 }, length{ 0 }
 {
 	MemoryLocation = new int[capacity];
 }
-IntArray::IntArray(std::initializer_list<int>Initial_Elements)
+Array::Array(std::initializer_list<int>Initial_Elements)
 	: capacity{ Initial_Elements.size() }, length{ Initial_Elements.size() }
 {
 	MemoryLocation = new int[Initial_Elements.size()];
@@ -45,7 +45,7 @@ IntArray::IntArray(std::initializer_list<int>Initial_Elements)
 	}
 }
 
-IntArray::IntArray(const IntArray& Source)
+Array::Array(const Array& Source)
 	:capacity{ Source.capacity }, length{ Source.length }
 {
 	MemoryLocation = new int[capacity];
@@ -55,12 +55,12 @@ IntArray::IntArray(const IntArray& Source)
 	}
 }
 
-IntArray::~IntArray()
+Array::~Array()
 {
 	delete[] MemoryLocation;
 }
 
-void IntArray::Print() const
+void Array::Print() const
 {
 	std::cout << '{';
 	for (size_t Index{ 0 }; Index < length; ++Index)
@@ -70,7 +70,7 @@ void IntArray::Print() const
 	std::cout << '}' << '\n';
 }
 
-void IntArray::push_back(int New_Element)
+template<class T> void Array::push_back(T New_Element)
 {
 	if (length < capacity)
 	{
@@ -88,7 +88,7 @@ void IntArray::push_back(int New_Element)
 	}
 }
 
-int& IntArray::at(size_t index) //Element Access with bounds Checking
+int& Array::at(size_t index) //Element Access with bounds Checking
 {
 	if (index < length && index >= 0)
 	{
@@ -101,12 +101,12 @@ int& IntArray::at(size_t index) //Element Access with bounds Checking
 	IsArraySorted = false;
 }
 
-size_t IntArray::Size() const
+size_t Array::Size() const
 {
 	return length;
 }
 
-void IntArray::Insert(int Index, int Value)
+void Array::Insert(int Index, int Value)
 {
 	if (Index >= 0 && Index < length && ++length <= capacity)
 	{
@@ -125,7 +125,7 @@ void IntArray::Insert(int Index, int Value)
 	IsArraySorted = false;
 }
 
-bool IntArray::Insert(int Value) // Returns False if the array is not sorted return true if insertion is successful the array is sorted.
+bool Array::Insert(int Value) // Returns False if the array is not sorted return true if insertion is successful the array is sorted.
 {
 	if (IsSorted())
 	{
@@ -154,7 +154,7 @@ bool IntArray::Insert(int Value) // Returns False if the array is not sorted ret
 	}
 }
 
-void IntArray::Delete(int Index)
+void Array::Delete(int Index)
 {
 	if (Index >= 0 && Index < length)
 	{
@@ -172,7 +172,7 @@ void IntArray::Delete(int Index)
 	IsArraySorted = false;
 }
 
-int IntArray::LinearSearch(int Key)
+int Array::LinearSearch(int Key)
 {
 	if (length <= 0)
 	{
@@ -192,7 +192,7 @@ int IntArray::LinearSearch(int Key)
 	}
 }
 
-int IntArray::BinarySearch(int Key)
+int Array::BinarySearch(int Key)
 {
 	if (IsSorted())
 	{
@@ -221,7 +221,7 @@ int IntArray::BinarySearch(int Key)
 	return -1;
 }
 
-int IntArray::Max() const
+int Array::Max() const
 {
 	int Max = MemoryLocation[0];
 	for (int x{ 0 }; x < length; ++x)
@@ -234,7 +234,7 @@ int IntArray::Max() const
 	return Max;
 }
 
-int IntArray::Min() const
+int Array::Min() const
 {
 	int Min = MemoryLocation[0];
 	for (int x{ 0 }; x < length; ++x)
@@ -247,32 +247,17 @@ int IntArray::Min() const
 	return Min;
 }
 
-int IntArray::Sum() const
-{
-	int sum = MemoryLocation[0];
-	for (int x{ 1 }; x < length; ++x)
-	{
-		sum += MemoryLocation[x];
-	}
-	return sum;
-}
-
-float IntArray::Average() const
-{
-	return Sum() / static_cast<float>(length);
-}
-
-int* IntArray::GetArray() const
+int* Array::GetArray() const
 {
 	return MemoryLocation;
 }
 
-int IntArray::Capacity() const
+int Array::Capacity() const
 {
 	return capacity;
 }
 
-void IntArray::Reverse()
+void Array::Reverse()
 {
 	int* TempArray = new int[capacity];
 	for (size_t x{ 0 }, y{ length - 1 }; x < length; ++x, --y)
@@ -284,7 +269,7 @@ void IntArray::Reverse()
 	TempArray = nullptr;
 }
 
-void IntArray::LeftShift()
+void Array::LeftShift()
 {
 	for (int x{ 0 }; x < length; ++x)
 	{
@@ -294,7 +279,7 @@ void IntArray::LeftShift()
 	IsArraySorted = false;
 }
 
-void IntArray::RightShift()
+void Array::RightShift()
 {
 	for (int x = length - 1; x >= 0; --x)
 	{
@@ -303,7 +288,7 @@ void IntArray::RightShift()
 	MemoryLocation[0] = 0;
 }
 
-void IntArray::RightRotate()
+void Array::RightRotate()
 {
 	int temp = MemoryLocation[length - 1];
 	for (int x = length - 1; x >= 0; --x)
@@ -314,7 +299,7 @@ void IntArray::RightRotate()
 	IsArraySorted = false;
 }
 
-void IntArray::LeftRotate()
+void Array::LeftRotate()
 {
 	int temp = MemoryLocation[0];
 	for (int x{ 0 }; x < length; ++x)
@@ -325,7 +310,7 @@ void IntArray::LeftRotate()
 	IsArraySorted = false;
 }
 
-bool IntArray::IsSorted()
+bool Array::IsSorted()
 {
 	if (!IsArraySorted)
 	{
@@ -341,17 +326,17 @@ bool IntArray::IsSorted()
 	return true;
 }
 
-IntArray::iterator IntArray::begin()const
+Array::iterator Array::begin()const
 {
 	return MemoryLocation;
 }
 
-IntArray::iterator IntArray::end()const
+Array::iterator Array::end()const
 {
 	return(MemoryLocation + length);
 }
 
-void IntArray::NegativeRotate()
+void Array::NegativeRotate()
 {
 	for (size_t OuterLoop{ length - 1 }; OuterLoop > 0; --OuterLoop)
 	{
@@ -369,7 +354,7 @@ void IntArray::NegativeRotate()
 	}
 }
 
-void IntArray::Merge(const IntArray& OtherArray)
+void Array::Merge(const Array& OtherArray)
 {
 	ReallocateAndResize(OtherArray.length);
 	for (size_t x{ 0 }; x < OtherArray.length; ++x)
@@ -378,7 +363,7 @@ void IntArray::Merge(const IntArray& OtherArray)
 	}
 }
 
-bool IntArray::MergeAndSort(IntArray& OtherArray)
+bool Array::MergeAndSort(Array& OtherArray)
 {
 	if (this->IsSorted() && OtherArray.IsSorted())
 	{
@@ -422,10 +407,10 @@ bool IntArray::MergeAndSort(IntArray& OtherArray)
 	}
 }
 
-IntArray SetOperation::Union(IntArray& Array1, IntArray& Array2)
+Array Array::Union(Array& Array1, Array& Array2)
 {
 	int arr1 = 0, arr2 = 0, arr3 = 0;
-	IntArray TempArray;
+	Array TempArray;
 	while (arr1 < Array1.length && arr2 < Array2.length)
 	{
 		if (Array1.at(arr1) == Array2.at(arr2))
@@ -455,10 +440,10 @@ IntArray SetOperation::Union(IntArray& Array1, IntArray& Array2)
 	return TempArray;
 }
 
-IntArray SetOperation::Intersection(IntArray& Array1,  IntArray& Array2)
+Array Array::Intersection(Array& Array1,  Array& Array2)
 {
 	int arr1 = 0, arr2 = 0, arr3 = 0;
-	IntArray TempArray;
+	Array TempArray;
 	while (arr1 < Array1.length && arr2 < Array2.length)
 	{
 		if (Array1.at(arr1) == Array2.at(arr2))
@@ -493,9 +478,9 @@ IntArray SetOperation::Intersection(IntArray& Array1,  IntArray& Array2)
 	return TempArray;
 }
 
-IntArray SetOperation::Difference(IntArray& Array1, IntArray& Array2)
+Array Array::Difference(Array& Array1, Array& Array2)
 {
-	IntArray Temp;
+	Array Temp;
 	Temp.Merge(Array1);
 	return Temp;
 }
