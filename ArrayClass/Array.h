@@ -1,13 +1,6 @@
 #pragma once
 #include<initializer_list>
 
-class Array;
-
-
-	Array Union(Array& Array1, Array& Array2);
-	Array Intersection(Array& Array1, Array& Array2);
-	Array Difference(Array& Array1, Array& Array2);
-
 template<class T>
 class My_Iterator
 {
@@ -38,11 +31,11 @@ public:
 		--(*this);
 		return iterator;
 	}
-	int operator[](int index)
+	T operator[](int index)
 	{
 		return *(Pointer + index);
 	}
-	int operator*()const
+	T operator*()const
 	{
 		return *Pointer;
 	}
@@ -60,9 +53,6 @@ class Array
 {
 private:
 	using iterator = My_Iterator;
-	friend Array SetOperation::Union(Array& Array1,Array& Array2);
-	friend Array SetOperation::Intersection(Array& Array1, Array& Array2);
-	friend Array SetOperation::Difference(Array& Array1,Array& Array2);
 	T* MemoryLocation;
 	size_t capacity;
 	size_t length;
@@ -99,7 +89,7 @@ public:
 	void NegativeRotate();
 	void Merge(const Array<T>& OtherArray);
 	bool MergeAndSort(Array<T>& OtherArray);// Merge Two Sorted Arrays Returns false if one of the array is not sorted and true if array is merged successfully.
-	Array Union(Array& Array1, Array& Array2);
-	Array Intersection(Array& Array1, Array& Array2);
-	Array Difference(Array& Array1, Array& Array2);
+	static Array Union(Array& Array1, Array& Array2);
+	static Array Intersection(Array& Array1, Array& Array2);
+	static Array Difference(Array& Array1, Array& Array2);
 };
