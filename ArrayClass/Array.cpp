@@ -2,17 +2,18 @@
 #include<initializer_list>
 #include<iostream>
 #include<list>
-void Array::Swap(int* Value_A, int* Value_B)
+template<typename T>
+void Array<T>::Swap(T* Value_A, T* Value_B)
 {
 	int Temp = *Value_A;
 	*Value_A = *Value_B;
 	*Value_B = Temp;
 }
-
-void Array::ReallocateAndResize(size_t Extra)
+template<typename T>
+void Array<T>::ReallocateAndResize()
 {
 	capacity *= (2 + Extra);
-	int* TempArray = new int[capacity];
+	T* TempArray = new T[capacity];
 	for (int x{ 0 }; x < length; ++x)
 	{
 		TempArray[x] = MemoryLocation[x];
@@ -21,11 +22,11 @@ void Array::ReallocateAndResize(size_t Extra)
 	MemoryLocation = TempArray;
 	TempArray = nullptr;
 }
-
-Array::Array(size_t Count)//Allocates n Memory for the array
+template<typename T>
+Array<T>::Array(size_t Count)//Allocates n Memory for the array
 	:capacity{ Count }, length{ 0 }
 {
-	MemoryLocation = new int[capacity];
+	MemoryLocation = new T[capacity];
 }
 
 Array::Array()//Default Constructor allocates 10 memory space.
@@ -79,7 +80,7 @@ template<class T> void Array::push_back(T New_Element)
 	}
 	else
 	{
-		ReallocateAndResize(0);
+		ReallocateAndResize();
 		push_back(New_Element);
 	}
 	if (New_Element < MemoryLocation[length - 2])//We have to compare the element with the element before it. if i use the length it will be compare to itself so we have to offset two index to reach the last element before insertion
@@ -119,7 +120,7 @@ void Array::Insert(int Index, int Value)
 	else
 	{
 		--length;
-		ReallocateAndResize(0);
+		ReallocateAndResize();
 		Insert(Index, Value);
 	}
 	IsArraySorted = false;
@@ -148,7 +149,7 @@ bool Array::Insert(int Value) // Returns False if the array is not sorted return
 		}
 		else
 		{
-			ReallocateAndResize(0);
+			ReallocateAndResize();
 			Insert(Value);
 		}
 	}
@@ -356,11 +357,7 @@ void Array::NegativeRotate()
 
 void Array::Merge(const Array& OtherArray)
 {
-	ReallocateAndResize(OtherArray.length);
-	for (size_t x{ 0 }; x < OtherArray.length; ++x)
-	{
-		this->push_back(OtherArray.MemoryLocation[x]);
-	}
+	//Todo Redo the function to make life easier
 }
 
 bool Array::MergeAndSort(Array& OtherArray)
