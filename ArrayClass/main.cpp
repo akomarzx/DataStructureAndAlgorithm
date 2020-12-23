@@ -1,15 +1,13 @@
 #include<iostream>
 #include"Array.h"
 #include<vector>
-
-
+#include<string>
+#include<iomanip>
 int main()
 {
-	Array array1{2,5,9,12,16,18 };
-	Array array2{5,10,16,17,18};
-	Array array3 = Union(array1, array2);
-	
-	array3.Print();
+
+	Array<int> array1{10,20,50 };
+	Array<int> arra2{ 15,30};
 
 	return 0;
-}
+} 
