@@ -1,4 +1,4 @@
-#pragma once
+    #pragma once
 #include<initializer_list>
 #include<iostream>
 #include<list>
@@ -64,6 +64,7 @@ public:
 	~Array<T>();
 	Array<T>();
 	explicit Array<T>(size_t Count);//Allocates n Memory for the array
+	Array<T>(size_t Count, T Value);
 	explicit Array<T>(std::initializer_list<T>Initial_Elements);
 	void Print()const;
 	void push_back(T& New_Element);
@@ -129,6 +130,16 @@ void Array<T>::ReallocateAndResize()
 	delete[]MemoryLocation;
 	MemoryLocation = TempArray;
 	TempArray = nullptr;
+}
+template<typename T>
+Array<T>::Array(size_t Count, T Value)	
+	:capacity{Count} , length {Count}
+{
+	MemoryLocation = new T[capacity];
+	for (int x{ 0 }; x < length; ++x)
+	{
+		MemoryLocation[x] = Value;
+	}
 }
 template<typename T>
 Array<T>::Array(size_t Count)//Allocates n Memory for the array
