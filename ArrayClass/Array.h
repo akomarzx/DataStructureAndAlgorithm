@@ -64,7 +64,7 @@ public:
 	~Array<T>();
 	Array<T>();
 	explicit Array<T>(size_t Count);//Allocates n Memory for the array
-	Array<T>(std::initializer_list<T>Initial_Elements);
+	explicit Array<T>(std::initializer_list<T>Initial_Elements);
 	void Print()const;
 	void push_back(T& New_Element);
 	void emplace_back(T&& New_Element);
@@ -193,10 +193,6 @@ void Array<T>::push_back(T& New_Element)
 		ReallocateAndResize();
 		push_back(New_Element);
 	}
-	if (New_Element < MemoryLocation[length - 2])//We have to compare the element with the element before it. if i use the length it will be compare to itself so we have to offset two index to reach the last element before insertion
-	{
-		IsArraySorted = false;
-	}
 }
 template<typename T>
 T& Array<T>::at(size_t index) //Element Access with bounds Checking
@@ -209,7 +205,6 @@ T& Array<T>::at(size_t index) //Element Access with bounds Checking
 	{
 		throw "Testing";
 	}
-	IsArraySorted = false;
 }
 template<typename T>
 size_t Array<T>::Size() const
@@ -233,7 +228,6 @@ void Array<T>::Insert(int Index, T Value)
 		ReallocateAndResize();
 		Insert(Index, Value);
 	}
-	IsArraySorted = false;
 }
 template<typename T>
 bool Array<T>::Insert(T Value) // Returns False if the array is not sorted return true if insertion is successful the array is sorted.
@@ -242,7 +236,7 @@ bool Array<T>::Insert(T Value) // Returns False if the array is not sorted retur
 	{
 		if (length < capacity)
 		{
-			for (int x = length; x >= 0; --x)
+			for (size_t x = length; x >= 0; --x)
 			{
 				if (Value > MemoryLocation[x - 1])
 				{
@@ -269,7 +263,7 @@ void Array<T>::Delete(size_t Index)
 {
 	if (Index >= 0 && Index < length)
 	{
-		for (int CurrentIndex{ Index }; CurrentIndex < length; ++CurrentIndex)
+		for (size_t CurrentIndex{ Index }; CurrentIndex < length; ++CurrentIndex)
 		{
 			MemoryLocation[CurrentIndex] = MemoryLocation[CurrentIndex + 1];
 		}
@@ -280,7 +274,6 @@ void Array<T>::Delete(size_t Index)
 	{
 		throw 1;
 	}
-	IsArraySorted = false;
 }
 template<typename T>
 My_Iterator<T> Array<T>::LinearSearch(T Key)
@@ -291,7 +284,7 @@ My_Iterator<T> Array<T>::LinearSearch(T Key)
 	}
 	else
 	{
-		for (int x{ 0 }; x < length; ++x)
+		for (size_t x{ 0 }; x < length; ++x)
 		{
 			if (Key == MemoryLocation[x])
 			{
@@ -303,7 +296,7 @@ My_Iterator<T> Array<T>::LinearSearch(T Key)
 	}
 }
 template<typename T>
-My_Iterator<T> Array<T>::BinarySearch(T Key) 
+My_Iterator<T> Array<T>::BinarySearch(T Key)
 {
 	if (IsSorted())
 	{
@@ -311,7 +304,7 @@ My_Iterator<T> Array<T>::BinarySearch(T Key)
 		{
 			end();
 		}
-		size_t low = 0, high = length - 1, middle;
+		int low = 0, high = length - 1, middle;
 		while (low <= high)
 		{
 			middle = (low + high) / 2;
@@ -388,7 +381,6 @@ void Array<T>::LeftShift()
 		MemoryLocation[x] = MemoryLocation[x + 1];
 	}
 	MemoryLocation[length - 1] = 0;
-	IsArraySorted = false;
 }
 template<typename T>
 void Array<T>::RightShift()
@@ -408,7 +400,6 @@ void Array<T>::RightRotate()
 		MemoryLocation[x] = MemoryLocation[x - 1];
 	}
 	MemoryLocation[0] = temp;
-	IsArraySorted = false;
 }
 template<typename T>
 void Array<T>::LeftRotate()
@@ -419,22 +410,17 @@ void Array<T>::LeftRotate()
 		MemoryLocation[x] = MemoryLocation[x + 1];
 	}
 	MemoryLocation[length - 1] = temp;
-	IsArraySorted = false;
 }
 template<typename T>
 bool Array<T>::IsSorted()
 {
-	if (!IsArraySorted)
+	for (int x{ 0 }; x < length - 1; ++x)
 	{
-		for (int x{ 0 }; x < length - 1; ++x)
+		if (MemoryLocation[x] > MemoryLocation[x + 1])
 		{
-			if (MemoryLocation[x] > MemoryLocation[x + 1])
-			{
-				return false;
-			}
+			return false;
 		}
 	}
-	IsArraySorted = true;
 	return true;
 }
 
@@ -470,7 +456,6 @@ void Array<T>::NegativeRotate()
 template<typename T>
 void Array<T>::Merge(const Array<T>& OtherArray)
 {
-	//Todo Redo the function to make life easier
 }
 template<typename T>
 bool Array<T>::MergeAndSort(Array<T>& OtherArray)
@@ -479,7 +464,7 @@ bool Array<T>::MergeAndSort(Array<T>& OtherArray)
 	{
 		int arr1 = 0, arr2 = 0, arr3 = 0;
 		int TempArrayCap = length + OtherArray.length;
-		int* TempArray = new T[TempArrayCap];
+		T* TempArray = new T[TempArrayCap];
 		while (arr1 < length && arr2 < OtherArray.length)
 		{
 			if (MemoryLocation[arr1] < OtherArray.MemoryLocation[arr2])
@@ -507,6 +492,7 @@ bool Array<T>::MergeAndSort(Array<T>& OtherArray)
 		delete[]MemoryLocation;
 		MemoryLocation = TempArray;
 		TempArray = nullptr;
+		capacity = TempArrayCap;
 		length = TempArrayCap;
 		return true;
 	}
@@ -553,7 +539,7 @@ Array<T> Array<T>::Intersection(Array<T>& Array1, Array<T>& Array2)
 {
 	int arr1 = 0, arr2 = 0;
 	Array<T> TempArray;
-	while (arr1 < Array1.length  && arr2 < Array2.length )
+	while (arr1 < Array1.length && arr2 < Array2.length)
 	{
 		if (Array1.at(arr1) == Array2.at(arr2))
 		{
@@ -570,18 +556,28 @@ Array<T> Array<T>::Intersection(Array<T>& Array1, Array<T>& Array2)
 			++arr2;
 		}
 	}
-	for (; arr1 < Array1.length; ++arr1)
+	if (arr1 > Array1.length)
 	{
-		if (Array1.at(arr1) == Array2.at(arr2))
+		while (Array1.MemoryLocation[arr1 - 1] < Array2.MemoryLocation[arr2])
 		{
-			TempArray.push_back(Array1.at(arr1));
+			if (Array1.MemoryLocation[arr1 - 1] == Array2.MemoryLocation[arr2])
+			{
+				TempArray.push_back(Array1.MemoryLocation[arr1 - 1]);
+				break;
+			}
+			++arr2;
 		}
 	}
-	for (; arr2 < Array2.length; ++arr2)
+	else
 	{
-		if (Array1.at(arr1) == Array2.at(arr2))
+		while (Array1.MemoryLocation[arr1] < Array2.MemoryLocation[arr2 - 1])
 		{
-			TempArray.push_back(Array2.at(arr2));
+			if (Array1.MemoryLocation[arr1] == Array2.MemoryLocation[arr2 - 1])
+			{
+				TempArray.push_back(Array1.MemoryLocation[arr1 - 1]);
+				break;
+			}
+			++arr1;
 		}
 	}
 	return TempArray;

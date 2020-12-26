@@ -8,13 +8,13 @@ namespace Practice
 		{
 			return 1;
 		}
-		if(power % 2 == 0)
+		if (power % 2 == 0)
 		{
-			return exp(base * base , (power/2));
+			return exp(base * base, (power / 2));
 		}
 		else
 		{
-			return base * exp(base * base, ((power - 1)/2));
+			return base * exp(base * base, ((power - 1) / 2));
 		}
 	}
 }

@@ -14,7 +14,6 @@ int foo(int n)
 
 int main()
 {
-
 	foo(95);
 	return 0;
-}  
+}

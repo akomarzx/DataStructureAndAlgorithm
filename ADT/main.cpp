@@ -8,10 +8,9 @@ struct Array
 	int length;
 };
 void foo()
-{	
+{
 	std::cout << "Hello world\n";
 }
-
 
 int main()
 {
@@ -21,7 +20,7 @@ int main()
 	std::cin >> arr.size;
 	arr.A = new int[arr.size];
 	arr.length = 0;
-	
+
 	std::cout << "Enter the number of Elements: ";
 	int num_of_elements{ 0 };
 	std::cin >> num_of_elements;
@@ -39,10 +38,9 @@ int main()
 	*/
 
 	std::vector<int> myvec;
-	std::cout << myvec.capacity()<< '\n';
+	std::cout << myvec.capacity() << '\n';
 	myvec.reserve(2000);
 	std::cout << myvec.capacity() << '\n';
-
 
 	std::cout << "Hello World\n";
 	return 0;

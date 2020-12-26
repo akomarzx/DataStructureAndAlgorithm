@@ -21,11 +21,10 @@ unsigned long long fib(int n)
 	}
 }
 
-
 int main()
 {
 	int input{ 0 };
-	
+
 	for (int x{ 0 }; x <= 20; ++x)
 	{
 		std::cout << "Fibonacci of " << x << " is = " << fib(x) << '\n';
