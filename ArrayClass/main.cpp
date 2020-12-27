@@ -6,9 +6,9 @@
 
 int main()
 {
-	Array<int> array1{ 2,3,3,5,7,9,9,10,15,30,3,30,3 };
+	Array<int> array1{ 2,3,3,5,7,9,9,10,15,30,3,30,3,62,70,62,2 };
 	
-	Array<int> Hashtable(array1.Max() + 1 , 0);
+	Array<int> Hashtable(array1.Max() + static_cast<long long>(1) , 0);
 	
 	for (int x{ 0 }; x < array1.Size(); ++x)
 	{
