@@ -69,7 +69,7 @@ public:
 	void Print()const;
 	void push_back(T& New_Element);
 	void emplace_back(T&& New_Element);
-	T& at(size_t index);//Element Access with bounds Checking
+	T& at(const size_t& index);//Element Access with bounds Checking
 	size_t Size()const;
 	void Insert(int Index, T Value);//Insert Element at Index
 	bool Insert(T Value); // Returns False if the array is not sorted return true if insertion is successful the array is sorted.
@@ -130,6 +130,7 @@ void Array<T>::ReallocateAndResize()
 	delete[]MemoryLocation;
 	MemoryLocation = TempArray;
 	TempArray = nullptr;
+	delete[]TempArray;
 }
 template<typename T>
 Array<T>::Array(size_t Count, T Value)	
@@ -206,7 +207,7 @@ void Array<T>::push_back(T& New_Element)
 	}
 }
 template<typename T>
-T& Array<T>::at(size_t index) //Element Access with bounds Checking
+T& Array<T>::at(const size_t& index) //Element Access with bounds Checking
 {
 	if (index < length && index >= 0)
 	{

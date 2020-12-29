@@ -12,8 +12,8 @@ unsigned long long fib(int n)
 	}
 	else
 	{
-		std::vector<int> vec{ 0,1 };
-		for (int i{ 1 }; i <= n - 1; ++i)
+		std::vector<long long> vec{ 0,1 };
+		for (long long i{ 1 }; i <= n - 1; ++i)
 		{
 			vec.push_back(vec.back() + vec.at(i - 1));
 		}
@@ -25,7 +25,7 @@ int main()
 {
 	int input{ 0 };
 
-	for (int x{ 0 }; x <= 20; ++x)
+	for (int x{ 0 }; x <= 100; ++x)
 	{
 		std::cout << "Fibonacci of " << x << " is = " << fib(x) << '\n';
 	}
