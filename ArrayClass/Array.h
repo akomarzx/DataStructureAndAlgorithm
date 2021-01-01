@@ -1,7 +1,7 @@
-    #pragma once
+#pragma once
 #include<initializer_list>
-#include<iostream>
-#include<list>
+#include<utility>
+#include<cstddef>
 template<class T>
 class My_Iterator
 {
@@ -66,7 +66,6 @@ public:
 	explicit Array<T>(size_t Count);//Allocates n Memory for the array
 	Array<T>(size_t Count, T Value);
 	explicit Array<T>(std::initializer_list<T>Initial_Elements);
-	void Print()const;
 	void push_back(T& New_Element);
 	void emplace_back(T&& New_Element);
 	T& at(const size_t& index);//Element Access with bounds Checking
@@ -181,17 +180,6 @@ Array<T>::~Array()
 {
 	delete[] MemoryLocation;
 }
-template<typename T>
-void Array<T>::Print() const
-{
-	std::cout << '{';
-	for (size_t Index{ 0 }; Index < length; ++Index)
-	{
-		std::cout << MemoryLocation[Index] << ' ';
-	}
-	std::cout << '}' << '\n';
-}
-
 template<class T>
 void Array<T>::push_back(T& New_Element)
 {
@@ -353,7 +341,7 @@ T Array<T>::Max() const
 template<typename T>
 T Array<T>::Min() const
 {
-	T = MemoryLocation[0];
+	T Min = MemoryLocation[0];
 	for (int x{ 0 }; x < length; ++x)
 	{
 		if (MemoryLocation[x] < Min)
