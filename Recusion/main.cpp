@@ -1,18 +1,20 @@
 #include <iostream>
 
-void foo(int x[], int size)
+int factorial(int n)
 {
-	for (int y{ 0 }; y < size; ++y)
+	if (n == 0)
 	{
-		x[y] = y;
+		return 1;
 	}
-	size = 20;
+	else
+	{
+		return (n * factorial(n - 1));
+	}
 }
+
+
 int main()
 {
-	constexpr int size = 5;
-	int x[size]{ 2,3,54,6,3 };
-	std::cout << *(x + 1) << std::endl;
-
+	std::cout << factorial(0);
 	return 0;
 }
