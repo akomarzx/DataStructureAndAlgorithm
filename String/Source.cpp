@@ -2,10 +2,9 @@
 
 int main()
 {
-	int x = 2;
 
+	int* myptr = new int[20];
 	
-	
-
-	return 0;
+	int array[20000];
+	array[2] = 20;
 }

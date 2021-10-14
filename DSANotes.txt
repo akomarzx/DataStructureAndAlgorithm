@@ -1,0 +1,57 @@
+Data structures is the arrangement of data items and the effecient operation on the data.
+
+Data is mandatory
+
+*installed program and apps will be stored in the storage
+
+Data has to be in the main memory in order to process it
+How you organize a data so that the program will effeciently utilize and access the data this is data structure
+
+*Databases - arrangement of data in the permanent storage 
+Data structure is in main memory*
+Database arrangement of data in permanent storage
+
+*Stack and heap memory*
+ 1 bit is either 0 or 1
+1 byte = 8 bits
+1024bytes = 1kilobytes
+
+every bytes has its address*
+
+main memory is divided into small addressable unit called bytes*
+
+address will only have 1 value not like coordinate system
+
+65535 = 64kb
+
+larger size ram is not used entirely as one unit but is dividied into segments
+
+usuall size of segment is 64kb*
+
+*How our program uses main memory*
+
+1.the program file or machgine code must be brought into the main memory first into the code section
+
+Example.
+
+void main()
+{
+	int x = 0;
+	double y = 0.0;
+}
+
+The 6 bytes is allocated in the stack
+
+Whatever variable you declare inside a function the memory for those variable will be created in the stack.
+
+the memory allocated in the stack will depend on your program ex. how many variable you have. It is calculated during compilation time
+
+*Static memory size is static and it was decided during compile time.
+
+void func2(int i) Parameters also need to allocate memory
+{
+	int a;
+}
+
+the stack unwind after the function finished execution
+*how much memory is allocated during a function call depends on the variables and their size that also includes parameters
