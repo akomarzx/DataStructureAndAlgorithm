@@ -15,11 +15,9 @@ class linked_list
 		{
 			if (data != nullptr)
 			{
-				std::cout << "Im deleting" << *data << std::endl;
 				delete data;
 			}
 		}
-
 	};
 
 private:
@@ -123,6 +121,13 @@ public:
 	}
 };
 
+class foo
+{
+public:
+protected:
+private:
+};
+
 int main()
 {
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
@@ -131,7 +136,9 @@ int main()
 	mylist.Append("Rebekah");
 	mylist.Insert(1, "jewel");
 	mylist.Insert(-1, "Rsds");
+	mylist.Append("FASDASD");
 	mylist.Display();
+	linked_list<foo> list;
 	return 0;
 	_CrtDumpMemoryLeaks();
 }
