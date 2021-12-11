@@ -9,17 +9,8 @@ class linked_list
 
 	struct node
 	{
-		T* data;
+		T data;
 		node* next_node;
-		~node()
-		{
-			if (data != nullptr)
-			{
-				std::cout << "Im deleting" << *data << std::endl;
-				delete data;
-			}
-		}
-
 	};
 
 private:
@@ -27,11 +18,11 @@ private:
 public:
 
 	linked_list()
-		:head_pointer{ std::move(new node{nullptr,nullptr})}
+		:head_pointer{ std::move(new node{"",nullptr}) }
 	{}
 
 	linked_list(std::initializer_list<T> list)
-		:head_pointer{ std::move(new node{nullptr,nullptr})}
+		:head_pointer{ std::move(new node{"",nullptr}) }
 	{
 		for (auto x : list)
 		{
@@ -62,8 +53,8 @@ public:
 	{
 		if (head_pointer->next_node == nullptr)
 		{
-			head_pointer->next_node = std::move(new node{ new T(element),nullptr });
-		
+			head_pointer->next_node = std::move(new node{ element,nullptr });
+
 			return;
 		}
 
@@ -73,15 +64,15 @@ public:
 		{
 			temp = temp->next_node;
 		}
- 
-		temp->next_node = std::move(new node{ new T(element),nullptr });
+
+		temp->next_node = std::move(new node{ element,nullptr });
 	}
 	void Display()const
 	{
 		node* temp = head_pointer->next_node;
 		while (temp != nullptr)
 		{
-			std::cout << *(temp->data) << " ";
+			std::cout << temp->data << " ";
 			temp = temp->next_node;
 		}
 		std::cout << '\n';
@@ -99,14 +90,13 @@ public:
 	// use -1 to insert on the front 
 	// use Append() method if you want to insert in the back
 	//************************************
-	void Insert(int at,T element)
+	void Insert(int at, T element)
 	{
 		node* temp = head_pointer->next_node;
 		if (at == -1)
 		{
-			node* newNode = std::move(new node{ new T(element), temp->next_node });
+			node* newNode = new node({ element,head_pointer->next_node });
 			head_pointer->next_node = newNode;
-			newNode->next_node = temp;
 			return;
 		}
 		int counter = 1;
@@ -114,7 +104,7 @@ public:
 		{
 			if (counter == at)
 			{
-				node* newNode = std::move(new node{ new T(element), temp->next_node});
+				node* newNode = new node({ element, temp->next_node });
 				temp->next_node = newNode;
 			}
 			temp = temp->next_node;
@@ -122,16 +112,13 @@ public:
 		}
 	}
 };
-
 int main()
 {
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
-
-	linked_list <std::string > mylist{ "Ronald" , "Ombao"};
-	mylist.Append("Rebekah");
-	mylist.Insert(1, "jewel");
-	mylist.Insert(-1, "Rsds");
+	linked_list<std::string> mlist;
+	linked_list<std::string> mylist{ "Ronald", "Ombao" };
 	mylist.Display();
+
 	return 0;
 	_CrtDumpMemoryLeaks();
 }
