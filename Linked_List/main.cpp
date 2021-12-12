@@ -22,10 +22,11 @@ class linked_list
 
 private:
 	node* head_pointer;
+	node* tail_pointer;
 public:
 
 	linked_list()
-		:head_pointer{ std::move(new node{nullptr,nullptr})}
+		:head_pointer{ std::move(new node{nullptr,nullptr})}, tail_pointer{std::move(new node{nullptr,nullptr}) }
 	{}
 
 	linked_list(std::initializer_list<T> list)
@@ -46,7 +47,8 @@ public:
 		}
 		delete(head_pointer);
 	}
-
+	//TODO : Make a Copy constructor that can deep copy
+	linked_list(linked_list& other) = delete;
 	//************************************
 	// Method:    Append
 	// FullName:  linked_list::Append
@@ -61,7 +63,7 @@ public:
 		if (head_pointer->next_node == nullptr)
 		{
 			head_pointer->next_node = std::move(new node{ new T(element),nullptr });
-		
+			tail_pointer = head_pointer->next_node;
 			return;
 		}
 
@@ -71,8 +73,9 @@ public:
 		{
 			temp = temp->next_node;
 		}
- 
+		
 		temp->next_node = std::move(new node{ new T(element),nullptr });
+		tail_pointer = temp->;
 	}
 	void Display()const
 	{
@@ -100,7 +103,7 @@ public:
 	void Insert(int at,T element)
 	{
 		node* temp = head_pointer->next_node;
-		if (at == -1)
+		if (at == -1 && temp != nullptr)
 		{
 			node* newNode = std::move(new node{ new T(element), temp->next_node });
 			head_pointer->next_node = newNode;
@@ -108,7 +111,8 @@ public:
 			return;
 		}
 		int counter = 1;
-		while (temp->next_node != nullptr && counter <= at)
+
+		while (temp != nullptr && counter <= at)
 		{
 			if (counter == at)
 			{
@@ -120,25 +124,17 @@ public:
 		}
 	}
 };
-
-class foo
+template<typename T>
+void foo(linked_list<T>* mylist)
 {
-public:
-protected:
-private:
-};
+
+}
 
 int main()
 {
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 
-	linked_list <std::string > mylist{ "Ronald" , "Ombao"};
-	mylist.Append("Rebekah");
-	mylist.Insert(1, "jewel");
-	mylist.Insert(-1, "Rsds");
-	mylist.Append("FASDASD");
-	mylist.Display();
-	linked_list<foo> list;
+
 	return 0;
 	_CrtDumpMemoryLeaks();
 }
