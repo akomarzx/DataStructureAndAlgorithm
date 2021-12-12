@@ -1,140 +1,179 @@
 #include<iostream>
 #include<initializer_list>
 #include<string>
-// Class for a single linked list
 
+//Class for creating a singly linked list
 template<class T>
 class linked_list
 {
-
+private:
 	struct node
 	{
 		T* data;
-		node* next_node;
+		node* next;
 		~node()
 		{
-			if (data != nullptr)
-			{
-				delete data;
-			}
+			delete data;
 		}
 	};
-
 private:
-	node* head_pointer;
-	node* tail_pointer;
+	node* head; 
+	node* tail;
+
 public:
 
 	linked_list()
-		:head_pointer{ std::move(new node{nullptr,nullptr})}, tail_pointer{std::move(new node{nullptr,nullptr}) }
-	{}
+		:head{nullptr}, tail{head}{}
 
 	linked_list(std::initializer_list<T> list)
-		:head_pointer{ std::move(new node{nullptr,nullptr})}
 	{
-		for (auto x : list)
+		for (auto element : list)
 		{
-			this->Append(x);
+			this->_Insert(element);
 		}
 	}
 	~linked_list()
 	{
-		while (head_pointer->next_node != nullptr)
+		
+		while (head != tail)
 		{
-			node* temp = head_pointer->next_node;
-			head_pointer->next_node = temp->next_node;
+			node* temp = head;
+			head = temp->next;
 			delete(temp);
 		}
-		delete(head_pointer);
+		delete head;
 	}
-	//TODO : Make a Copy constructor that can deep copy
-	linked_list(linked_list& other) = delete;
 	//************************************
-	// Method:    Append
-	// FullName:  linked_list::Append
-	// Access:    public 
-	// Returns:   void
-	// Qualifier:
-	// Parameter: int element
-	// Append the current list with element 
+	// Returns:bool
+	// Insert the element after the given position.
+	// Use -1 to insert on the first position O(1)
+	// use -2 to insert on the last position O(1)
+	// Else will insert after the at position O(n) based on 0 index
+	// return true if insertion is successful
 	//************************************
-	void Append(T element)
+	bool Insert(int at, T element)
 	{
-		if (head_pointer->next_node == nullptr)
+		if (TheNodeIsNull(head))
 		{
-			head_pointer->next_node = std::move(new node{ new T(element),nullptr });
-			tail_pointer = head_pointer->next_node;
-			return;
+			return false;
 		}
 
-		node* temp = head_pointer->next_node;
-
-		while (temp->next_node != nullptr)
+		if (at == -1 && !TheNodeIsNull(head))
 		{
-			temp = temp->next_node;
+			_InsertAtFront(element);
+			return true;
 		}
-		
-		temp->next_node = std::move(new node{ new T(element),nullptr });
-		tail_pointer = temp->;
-	}
-	void Display()const
-	{
-		node* temp = head_pointer->next_node;
-		while (temp != nullptr)
+		else if (at == -2 && !TheNodeIsNull(head))
 		{
-			std::cout << *(temp->data) << " ";
-			temp = temp->next_node;
+			_InsertAtBack(element);
+			return true;
+		}
+		else
+		{
+			int counter = 0;
+			
+			node* temp = head;
+
+			while (temp != nullptr && counter <= at)
+			{
+				if (counter == at)
+				{
+					node* newNode = std::move(new node{ new T(element) , temp->next });
+					temp->next = newNode;
+					return true;
+				}
+				temp = temp->next;
+				++counter;
+			}
+			return false;
+		}
+	}
+	void Display()
+	{
+		node* temp = head;
+
+		while (!TheNodeIsNull(head) && temp != nullptr)
+		{
+			std::cout << *(temp->data) << ' ';
+			temp = temp->next;
 		}
 		std::cout << '\n';
 	}
+private:
+	bool TheNodeIsNull(node* _node)
+	{
+		if (_node == nullptr)
+		{
+			return true;
+		}
+		return false;
+	}
+
 	//************************************
-	// Method:    Insert
-	// FullName:  linked_list::Insert
-	// Access:    public 
+	// Method:    _Insert
+	// FullName:  linked_list<T>::_Insert
+	// Access:    private 
 	// Returns:   void
 	// Qualifier:
-	// Parameter: int at
-	// Parameter: int element
-	// 
-	// Insert the element after the at element
-	// use -1 to insert on the front 
-	// use Append() method if you want to insert in the back
+	// Parameter: T element
+	// Internal function used by the constructor with initializer list 
+	// to populate the list. keeps track of the head and tail.
 	//************************************
-	void Insert(int at,T element)
+	void _Insert(T element)
 	{
-		node* temp = head_pointer->next_node;
-		if (at == -1 && temp != nullptr)
+		if (TheNodeIsNull(head))
 		{
-			node* newNode = std::move(new node{ new T(element), temp->next_node });
-			head_pointer->next_node = newNode;
-			newNode->next_node = temp;
+			node* newNode = std::move(new node{new T(element), nullptr});
+			head = newNode;
+			tail = head;
 			return;
 		}
-		int counter = 1;
 
-		while (temp != nullptr && counter <= at)
-		{
-			if (counter == at)
-			{
-				node* newNode = std::move(new node{ new T(element), temp->next_node});
-				temp->next_node = newNode;
-			}
-			temp = temp->next_node;
-			++counter;
-		}
+		node* newNode = std::move(new node{new T(element) , nullptr});
+		tail->next = newNode;
+		tail = newNode;
+	}
+	
+	//************************************
+	// Method:    _InsertAtFront
+	// FullName:  linked_list<T>::_InsertAtFront
+	// Access:    private 
+	// Returns:   void
+	// Qualifier:
+	// Parameter: T element
+	// Internal method only don't call when the list is empty
+	//************************************
+	void _InsertAtFront(T element)
+	{
+		node* newNode = std::move(new node{ new T(element) , nullptr });
+		newNode->next = head;
+		head = newNode;
+	}
+
+	//************************************
+	// Method:    _InsertAtFront
+	// FullName:  linked_list<T>::_InsertAtFront
+	// Access:    private 
+	// Returns:   void
+	// Qualifier:
+	// Parameter: T element
+	// Internal method only don't call when the list is empty
+	//************************************
+	void _InsertAtBack(T element)
+	{
+		node* newNode = std::move(new node{ new T(element) , nullptr });
+		tail->next = newNode;
+		tail = newNode;
 	}
 };
-template<typename T>
-void foo(linked_list<T>* mylist)
-{
-
-}
 
 int main()
 {
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+		
+	linked_list<int> list{ 1,2,3,4,5 };
 
-
+	list.Display();
 	return 0;
 	_CrtDumpMemoryLeaks();
 }
